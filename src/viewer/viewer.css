@@ -1,0 +1,164 @@
+
+/* Viewer (public web app) styles — everything sits inside .viewer-root */
+.viewer-root {
+  color-scheme: dark;
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  font-family: Roboto, Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* horizontal rows: scroll without a visible scrollbar, like the app */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* shimmer placeholder (app: #212121 → #424242) */
+.shimmer {
+  background: linear-gradient(90deg, #212121 25%, #424242 50%, #212121 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.3s infinite linear;
+}
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* Top-10 rank numbers (app: Impact 145px, stacked strokes) */
+.rank-number {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 145px;
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -5px;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-pop {
+  animation: fade-in-scale 0.3s ease-out;
+}
+
+/* first-open welcome screen fade (app: 1s ease-in) */
+@keyframes gpFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Installed app (home-screen icon): feel like a native app —
+   no rubber-band / pull-to-refresh jump, no long-press image menu, no text selection on taps */
+@media (display-mode: standalone) {
+  html,
+  body {
+    overscroll-behavior-y: none;
+  }
+  .viewer-root img {
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+  }
+  .viewer-root button,
+  .viewer-root a,
+  .viewer-root nav {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* iPhone zooms the page when a text box is under 16px — keep inputs at 16px there */
+@supports (-webkit-touch-callout: none) {
+  .viewer-root input,
+  .viewer-root textarea,
+  .viewer-root select {
+    font-size: 16px !important;
+  }
+}
+
+/* ───────── Big screens (laptop / desktop / TV) ───────── */
+
+/* keyboard / TV-remote focus: clear orange ring */
+.viewer-root a:focus-visible,
+.viewer-root button:focus-visible,
+.viewer-root [tabindex]:focus-visible {
+  outline: 3px solid #f97316;
+  outline-offset: 3px;
+}
+.viewer-root a,
+.viewer-root button {
+  scroll-margin-top: 6rem;
+  scroll-margin-bottom: 2rem;
+}
+/* poster cards grow a little when hovered or selected with the remote */
+.gp-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.gp-card:focus-visible {
+  transform: scale(1.06);
+  z-index: 5;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+}
+@media (hover: hover) {
+  .gp-card:hover {
+    transform: scale(1.06);
+    z-index: 5;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+  }
+}
+.gp-card:focus-visible {
+  outline-offset: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gp-card,
+  .gp-card:hover,
+  .gp-card:focus-visible {
+    transform: none;
+    transition: none;
+  }
+}
+/* rows: room for the hover zoom + scroll snapping that keeps the focused card in view */
+.gp-row {
+  scroll-padding-inline: 4vw;
+  padding-top: 0.75rem;
+  padding-bottom: 1.25rem;
+}
+
+/* everything grows on large monitors and TVs (all big-screen sizes are in rem) */
+@media (min-width: 1600px) {
+  html.gp-viewer {
+    font-size: 17px;
+  }
+}
+@media (min-width: 1900px) {
+  html.gp-viewer {
+    font-size: 19px;
+  }
+}
+@media (min-width: 2500px) {
+  html.gp-viewer {
+    font-size: 24px;
+  }
+}
