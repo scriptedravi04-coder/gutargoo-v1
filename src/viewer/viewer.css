@@ -1,0 +1,224 @@
+
+/* Viewer (public web app) styles — everything sits inside .viewer-root */
+.viewer-root {
+  color-scheme: dark;
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  font-family: Roboto, Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* horizontal rows: scroll without a visible scrollbar, like the app */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* shimmer placeholder (app: #212121 → #424242) */
+.shimmer {
+  background: linear-gradient(90deg, #212121 25%, #424242 50%, #212121 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.3s infinite linear;
+}
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* Top-10 rank numbers (app: Impact 145px, stacked strokes) */
+.rank-number {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 145px;
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -5px;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Phones: everything sits below the notch / Dynamic Island (0 in a normal browser tab,
+   the status-bar height when installed to the home screen). Sticky headers stick right under it. */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.sticky-top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+}
+/* the trailer / player sticks at the top only in portrait — in a landscape phone it would cover most of the screen */
+@media (orientation: portrait) {
+  .sticky-top-portrait {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+  }
+}
+.gp-fill-screen {
+  min-height: 100vh;
+  min-height: calc(100svh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+}
+.gp-statusbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: env(safe-area-inset-top, 0px);
+  background: #000;
+  z-index: 48;
+  pointer-events: none;
+}
+
+/* base-reset:start
+   The site-wide stylesheet gives every <input> a light border, padding, a bottom margin and a red focus
+   border (made for the admin panel). On the website that showed up as a rectangle INSIDE the rounded
+   search / phone boxes. Reset it here; element-only selectors so any Tailwind class still wins. */
+html input,
+html select,
+html textarea {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  border-width: 0;
+  border-radius: 0;
+  font-size: inherit;
+  box-shadow: none;
+}
+html input:focus,
+html select:focus,
+html textarea:focus {
+  outline: none;
+}
+/* same stylesheet: headings in "Space Grotesk" and light-grey default borders — not on the website */
+:where(.viewer-root) :is(h1, h2, h3, h4, h5, h6) {
+  font-family: inherit;
+}
+:where(.viewer-root) *,
+:where(.viewer-root) ::before,
+:where(.viewer-root) ::after {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+/* base-reset:end */
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-pop {
+  animation: fade-in-scale 0.3s ease-out;
+}
+
+/* first-open welcome screen fade (app: 1s ease-in) */
+@keyframes gpFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Installed app (home-screen icon): feel like a native app —
+   no rubber-band / pull-to-refresh jump, no long-press image menu, no text selection on taps */
+@media (display-mode: standalone) {
+  html,
+  body {
+    overscroll-behavior-y: none;
+  }
+  .viewer-root img {
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+  }
+  .viewer-root button,
+  .viewer-root a,
+  .viewer-root nav {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* iPhone zooms the page when a text box is under 16px — keep inputs at 16px there */
+@supports (-webkit-touch-callout: none) {
+  .viewer-root input,
+  .viewer-root textarea,
+  .viewer-root select {
+    font-size: 16px !important;
+  }
+}
+
+/* ───────── Big screens (laptop / desktop / TV) ───────── */
+
+/* keyboard / TV-remote focus: clear orange ring */
+.viewer-root a:focus-visible,
+.viewer-root button:focus-visible,
+.viewer-root [tabindex]:focus-visible {
+  outline: 3px solid #f97316;
+  outline-offset: 3px;
+}
+.viewer-root a,
+.viewer-root button {
+  scroll-margin-top: 6rem;
+  scroll-margin-bottom: 2rem;
+}
+/* poster cards grow a little when hovered or selected with the remote */
+.gp-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.gp-card:focus-visible {
+  transform: scale(1.06);
+  z-index: 5;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+}
+@media (hover: hover) {
+  .gp-card:hover {
+    transform: scale(1.06);
+    z-index: 5;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+  }
+}
+.gp-card:focus-visible {
+  outline-offset: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gp-card,
+  .gp-card:hover,
+  .gp-card:focus-visible {
+    transform: none;
+    transition: none;
+  }
+}
+/* rows: room for the hover zoom + scroll snapping that keeps the focused card in view */
+.gp-row {
+  scroll-padding-inline: 4vw;
+  padding-top: 0.75rem;
+  padding-bottom: 1.25rem;
+}
+
+/* everything grows on large monitors and TVs (all big-screen sizes are in rem) */
+@media (min-width: 1600px) {
+  html.gp-viewer {
+    font-size: 17px;
+  }
+}
+@media (min-width: 1900px) {
+  html.gp-viewer {
+    font-size: 19px;
+  }
+}
+@media (min-width: 2500px) {
+  html.gp-viewer {
+    font-size: 24px;
+  }
+}
