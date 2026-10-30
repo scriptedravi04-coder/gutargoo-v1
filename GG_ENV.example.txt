@@ -1,0 +1,47 @@
+# ── GG_ENV ─────────────────────────────────────────────────────────
+# Deploy pe sirf EK secret banana hai: naam GG_ENV
+# Value mein ye poori list paste karo (apni values bhar ke). Khaali line / # wali lines chalegi.
+# Purani alag-alag keys hata sakte ho — GG_ENV jeetega.
+# ⚠️ Ye file values bhar ke kisi ko mat bhejna / GitHub pe mat daalna.
+
+# Database + login (zaroori)
+MONGO_URI=
+JWT_SECRET=
+CUSTOMER_TOKEN_DAYS=180
+
+# Bunny Stream (videos)
+BUNNY_VIDEO_API_KEY=
+BUNNY_LIBRARY_ID=
+BUNNY_CDN_HOSTNAME=
+BUNNY_STREAM_PUBLIC_BASE=https://admin.gutargooplus.com/stream
+BUNNY_REFERER=
+
+# Bunny Storage (photos / posters)
+BUNNY_STORAGE_ZONE=
+BUNNY_STORAGE_PASSWORD=
+BUNNY_STORAGE_HOST=storage.bunnycdn.com
+BUNNY_STORAGE_CDN_HOSTNAME=
+BUNNY_STORAGE_PUBLIC_BASE=https://admin.gutargooplus.com/storage
+DOWNLOAD_VIA=
+
+# OTP SMS (app / website login)
+SMS_USER=
+SMS_AUTH_KEY=
+SMS_SENDER=
+SMS_TEMPLATE_ID=
+SMS_BASE_URL=https://api1.msgcherry.com/fe/api/v1/send
+OTP_TEST_MOBILE=
+OTP_TEST_CODE=
+
+# Store links (website ke Download buttons)
+PLAY_STORE_URL=https://play.google.com/store/apps/details?id=com.gutargooproo.application
+APP_STORE_URL=
+
+# Other
+TRUST_PROXY=1
+SYNC_KEY=
+
+# Pehli baar admin banane ke liye (login ke baad ye 3 lines hata dena)
+ADMIN_EMAIL=
+ADMIN_PASSWORD=
+ADMIN_RESET_PASSWORD=
